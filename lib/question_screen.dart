@@ -16,9 +16,10 @@ class _QuestionScreen extends State<QuestionScreen> {
   final QuizQuestion currenQuestion = questions[0];
   @override
   Widget build(context) {
-    return SizedBox(
-      width: double.infinity,
+    return Container(
+      margin: const EdgeInsets.all(40),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
@@ -26,26 +27,14 @@ class _QuestionScreen extends State<QuestionScreen> {
             style: const TextStyle(
               color: Colors.white,
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(
             height: 30,
           ),
-          AnswerButton(
-            answerText: currenQuestion.answers[0],
-            onTap: () {},
-          ),
-          AnswerButton(
-            answerText: currenQuestion.answers[1],
-            onTap: () {},
-          ),
-          AnswerButton(
-            answerText: currenQuestion.answers[2],
-            onTap: () {},
-          ),
-          AnswerButton(
-            answerText: currenQuestion.answers[3],
-            onTap: () {},
-          ),
+          ...currenQuestion.answers.map((answer) {
+            return AnswerButton(answerText: answer, onTap: () {});
+          })
         ],
       ),
     );
