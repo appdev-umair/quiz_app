@@ -5,7 +5,12 @@ import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/model/quiz_question.dart';
 
 class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({super.key});
+  const QuestionScreen(
+    this.onSelectAnswer, {
+    super.key,
+  });
+
+  final void Function(String answer) onSelectAnswer;
 
   @override
   State<QuestionScreen> createState() {
@@ -16,7 +21,8 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreen extends State<QuestionScreen> {
   int currenQuestionIndex = 0;
 
-  void answerQuestion() {
+  void answerQuestion(String answer) {
+    widget.onSelectAnswer(answer);
     setState(() {
       currenQuestionIndex++;
     });
@@ -34,7 +40,7 @@ class _QuestionScreen extends State<QuestionScreen> {
         children: [
           Text(
             currenQuestion.question,
-            style: GoogleFonts.croissantOne(
+            style: GoogleFonts.lato(
               color: const Color.fromARGB(255, 221, 159, 255),
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -45,7 +51,12 @@ class _QuestionScreen extends State<QuestionScreen> {
             height: 30,
           ),
           ...currenQuestion.answers.map((answer) {
-            return AnswerButton(answerText: answer, onTap: answerQuestion);
+            return AnswerButton(
+              answerText: answer,
+              onTap: () {
+                answerQuestion(answer);
+              },
+            );
           })
         ],
       ),
